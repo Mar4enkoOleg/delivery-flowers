@@ -27,3 +27,7 @@ export const createOrder = async (data: {
 export const getOrderDetails = async (id: string) => {
   return await $host.get(`/orders/${id}`);
 };
+
+export const getOrders = async (params: { email: string }) => {
+  return await $host.get(`/orders`, { params });
+};

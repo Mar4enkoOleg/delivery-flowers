@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { TFlowerWithCount } from "../types";
 import { ERecountAction } from "../enums";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   getFlowerCounter,
   getTotalPrice,
@@ -38,14 +38,17 @@ const ShoppingCart = () => {
     setLsState(parseCurrentLocalStorage());
   };
 
-  const handleOrderSubmit = async () => {
+  const handleOrderSubmit = async (e: any) => {
+    e.preventDefault();
+
     const flowers = lsState.map((element) => ({
       flowerId: element.id,
       count: element.count,
     }));
 
-    const response = await createOrder({ ...formData, flowers });
-    navigate(`/order-details/${response.data.id}`);
+    createOrder({ ...formData, flowers }).then((response) =>
+      navigate(`/order-details/${response.data.id}`)
+    );
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +73,7 @@ const ShoppingCart = () => {
       <Container>
         <Row>
           <Col>
-            <Form onClick={handleOrderSubmit}>
+            <Form onSubmit={handleOrderSubmit}>
               <Form.Group className="mb-3" controlId="orderForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -111,7 +114,7 @@ const ShoppingCart = () => {
                   placeholder="Ukraine, Kyiv"
                 />
               </Form.Group>
-              <Button variant="primary" type="button">
+              <Button variant="primary" type="submit">
                 Submit
               </Button>
             </Form>
