@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: api
+    hostname: api
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./:/app
+      - '/app/node_modules'
+    ports:
+      - '3000:3000'
+    env_file: './docker/.env'
+    depends_on:
+      database:
+        condition: service_started
+
+  database:
+    container_name: database
+    hostname: database
+    build: ./docker/database
+    env_file: './docker/.env'
+    ports:
+      - '5432:5432'

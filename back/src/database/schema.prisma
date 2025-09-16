@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Shop {
+  id String @id @default(uuid()) @db.Uuid()
+
+  name String @db.VarChar(255)
+
+  flowers Flower[]
+}
+
+model Flower {
+  id String @id @default(uuid()) @db.Uuid()
+
+  name  String @db.VarChar(255)
+  price Int
+
+  Shop   Shop?   @relation(fields: [shopId], references: [id])
+  shopId String? @db.Uuid()
+
+  orderedFlower OrderedFlower[]
+
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id String @id @default(uuid()) @db.Uuid()
+
+  name    String @db.VarChar(255)
+  email   String @db.VarChar(255)
+  phone   String @db.VarChar(255)
+  address String @db.VarChar(255)
+
+  orderedFlower OrderedFlower[]
+
+  createdAt DateTime @default(now())
+}
+
+model OrderedFlower {
+  id String @id @default(uuid()) @db.Uuid()
+
+  count Int @default(1)
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @db.Uuid()
+
+  flower   Flower @relation(fields: [flowerId], references: [id])
+  flowerId String @db.Uuid()
+}
