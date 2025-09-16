@@ -10,12 +10,16 @@ export class ShopService {
     return this.shopRepository.getShops(params);
   }
 
-  getShopFlowers(params: {
+  async getShopFlowers(params: {
     sortBy: SortingType;
     shopId: string;
     limit: number;
     offset: number;
   }) {
-    return this.shopRepository.getShopFlowers(params);
+    const [flowers, total] = await Promise.all([
+      this.shopRepository.getShopFlowers(params),
+      this.shopRepository.getFlowersTotal(params.shopId),
+    ]);
+    return { flowers, total };
   }
 }

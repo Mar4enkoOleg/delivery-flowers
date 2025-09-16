@@ -10,6 +10,7 @@ export class OrderRepository {
     const { flowers, ...rest } = data;
 
     return this.prisma.order.create({
+      select: { id: true },
       data: {
         ...rest,
         orderedFlower: {

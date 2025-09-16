@@ -34,4 +34,8 @@ export class ShopRepository {
       orderBy: getOrder[sortBy],
     });
   }
+
+  getFlowersTotal(shopId: string) {
+    return this.prisma.flower.count({ where: { shopId } });
+  }
 }
