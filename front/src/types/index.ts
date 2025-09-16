@@ -2,7 +2,7 @@ export type TShop = {
   id: string;
   name: string;
 };
-type TFlower = {
+export type TFlower = {
   id: string;
   name: string;
   price: number;

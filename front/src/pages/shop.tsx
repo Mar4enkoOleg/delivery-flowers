@@ -9,7 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { getFlowers, getShops } from "../http";
-import { TFlowerData, TShop } from "../types";
+import { TFlower, TFlowerData, TShop } from "../types";
 import { ESortBy } from "../enums";
 
 const Shop = () => {
@@ -44,6 +44,10 @@ const Shop = () => {
     const data = await getFlowers(currentShopId, eventKey as ESortBy);
 
     setFlowersData(data.data);
+  };
+
+  const handleAddToCart = (params: { flower: TFlower }) => {
+    localStorage.setItem("cart" + params.flower.id, JSON.stringify(params));
   };
 
   return (
@@ -84,7 +88,12 @@ const Shop = () => {
                     {new Date(flower.createdAt).toLocaleDateString()}
                   </Col>
                   <Col>
-                    <Button variant="outline-dark">Add to cart</Button>
+                    <Button
+                      variant="outline-dark"
+                      onClick={() => handleAddToCart({ flower })}
+                    >
+                      Add to cart
+                    </Button>
                   </Col>
                 </Row>
               </ListGroupItem>
