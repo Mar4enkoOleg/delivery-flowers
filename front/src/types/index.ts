@@ -10,6 +10,10 @@ export type TFlower = {
   createdAt: string;
 };
 
+export type TFlowerWithCount = TFlower & {
+  count: number;
+};
+
 export type TFlowerData = {
   flowers: TFlower[];
   total: number;

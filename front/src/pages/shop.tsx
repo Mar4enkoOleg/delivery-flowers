@@ -9,7 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { getFlowers, getShops } from "../http";
-import { TFlower, TFlowerData, TShop } from "../types";
+import { TFlower, TFlowerData, TFlowerWithCount, TShop } from "../types";
 import { ESortBy } from "../enums";
 
 const Shop = () => {
@@ -47,7 +47,23 @@ const Shop = () => {
   };
 
   const handleAddToCart = (params: { flower: TFlower }) => {
-    localStorage.setItem("cart" + params.flower.id, JSON.stringify(params));
+    const cart = localStorage.getItem("cart");
+
+    if (cart) {
+      const parsedCart: TFlowerWithCount[] = JSON.parse(
+        cart
+      ) as TFlowerWithCount[];
+
+      if (!parsedCart.find(({ id }) => params.flower.id === id)) {
+        parsedCart.push({ ...params.flower, count: 1 });
+        parsedCart.sort((a, b) => a.price - b.price);
+        localStorage.setItem("cart", JSON.stringify(parsedCart));
+      }
+    } else
+      localStorage.setItem(
+        "cart",
+        JSON.stringify([{ ...params.flower, count: 1 }])
+      );
   };
 
   return (
