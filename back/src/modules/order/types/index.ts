@@ -13,5 +13,4 @@ export type CreateOrder = {
 
 export type GetOrderParams = {
   email: string;
-  phone?: string;
 };

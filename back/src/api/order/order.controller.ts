@@ -19,7 +19,7 @@ export class OrderController {
   }
 
   @Post()
-  async createOrder(@Body() data: CreateOrderDto) {
-    await this.orderService.createOrder(data);
+  createOrder(@Body() data: CreateOrderDto) {
+    return this.orderService.createOrder(data);
   }
 }

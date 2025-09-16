@@ -33,10 +33,10 @@ export class OrderRepository {
   }
 
   getOrders(data: GetOrderParams) {
-    const { email, phone } = data;
+    const { email } = data;
 
     return this.prisma.order.findMany({
-      where: { AND: { email, phone } },
+      where: { email },
       include: { orderedFlower: { include: { flower: true } } },
     });
   }
