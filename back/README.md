@@ -1,20 +1,10 @@
 ## Project setup
 
 ```bash
-
-Create .env file ./back/docker/.env
-OR
-rename ./back/docker/.env.example to ./env
-back -> docker -> .env
-This file should contain ---->
-DATABASE_URL=postgresql://master:secret@database:5432/df
-
-Example:
-DATABASE_URL=postgresql://master:secret@database:5432/df
+Rename ./back/docker/.env.example to ./env
 
 # Use docker!
 # Run scripts only in root directory (with package.json)
-
 
 # Setup database
 $ npm run prisma:migrate
